@@ -1,0 +1,37 @@
+# MacJoystickMapper Configuration
+# Maps gamepad buttons/axes to keyboard keys
+
+# Face buttons
+buttonA: "space"
+buttonB: "e"
+buttonX: "r"
+buttonY: "q"
+
+# Shoulder buttons
+leftShoulder: "tab"
+rightShoulder: "return"
+
+# Triggers
+leftTrigger: "shift"
+rightTrigger: "control"
+
+# D-Pad
+dpadUp: "w"
+dpadDown: "s"
+dpadLeft: "a"
+dpadRight: "d"
+
+# Left stick → WASD
+leftStickUp: "w"
+leftStickDown: "s"
+leftStickLeft: "a"
+leftStickRight: "d"
+
+# Right stick → Arrow keys
+rightStickUp: "upArrow"
+rightStickDown: "downArrow"
+rightStickLeft: "leftArrow"
+rightStickRight: "rightArrow"
+
+# Deadzone threshold for analog sticks (0.0 - 1.0)
+deadzone: 0.5

@@ -53,17 +53,17 @@ Ensure the MVP handles edge cases gracefully.
 ## 3. To-Do Checklist
 
 ### Setup & Config
-- [ ] Run `swift package init --type executable`
-- [ ] Add `Yams` to `Package.swift` dependencies
-- [ ] Create `config.yaml` template in the project root
-- [ ] Write `ConfigParser.swift` to read YAML and output a routing table
+- [x] Run `swift package init --type executable`
+- [x] Add `Yams` to `Package.swift` dependencies
+- [x] Create `config.yaml` template in the project root
+- [x] Write `ConfigParser.swift` to read YAML and output a routing table
 
 ### Input & Output
-- [ ] Create `CGKeyCode` mapping dictionary (String -> UInt16)
-- [ ] Write `EventSynthesizer.swift` with `postKey(code:down:)` function
-- [ ] Write `ControllerManager.swift` to listen for connection notifications
-- [ ] Bind `buttonA`, `buttonB`, `buttonX`, `buttonY` to the translation engine
-- [ ] Bind analog stick axes to directional keys (WASD) with a `0.5` deadzone
+- [x] Create `CGKeyCode` mapping dictionary (String -> UInt16)
+- [x] Write `EventSynthesizer.swift` with `postKey(code:down:)` function
+- [x] Write `ControllerManager.swift` to listen for connection notifications
+- [x] Bind `buttonA`, `buttonB`, `buttonX`, `buttonY` to the translation engine
+- [x] Bind analog stick axes to directional keys (WASD) with a `0.5` deadzone
 
 ### Testing & Deployment
 - [ ] Add Terminal / IDE to macOS Accessibility privacy settings
