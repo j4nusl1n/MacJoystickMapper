@@ -42,10 +42,22 @@ if configPath == nil {
 // MARK: - Startup
 
 print("MacJoystickMapper starting...")
-print("Config: \(configPath!)")
+print("Config: \(configPath ?? "config.yaml")")
 if mode == .scan {
     print("Mode: SCAN (no keyboard events will be sent)")
 }
+
+// Check Accessibility permissions (required for CGEvent posting)
+if mode == .map {
+    if !EventSynthesizer.checkAccessibility(prompt: true) {
+        print("\nError: Accessibility permissions are required to send keyboard events.")
+        print("Grant permission in System Settings > Privacy & Security > Accessibility,")
+        print("then restart MacJoystickMapper.")
+        exit(1)
+    }
+    print("Accessibility permissions: granted")
+}
+
 print("Press Ctrl+C to quit.\n")
 
 let config: GamepadConfig

@@ -370,7 +370,7 @@ final class ControllerManager {
                 yPositive = nowUp
                 if let code: CGKeyCode = upCode {
                     let action: String = nowUp ? "↓" : "↑"
-                    print("\(action) \(upName) → \(upKeyName!)")
+                    print("\(action) \(upName) → \(upKeyName ?? "(unmapped)")")
                     EventSynthesizer.postKey(code: code, keyDown: nowUp)
                 }
             }
@@ -378,7 +378,7 @@ final class ControllerManager {
                 yNegative = nowDown
                 if let code: CGKeyCode = downCode {
                     let action: String = nowDown ? "↓" : "↑"
-                    print("\(action) \(downName) → \(downKeyName!)")
+                    print("\(action) \(downName) → \(downKeyName ?? "(unmapped)")")
                     EventSynthesizer.postKey(code: code, keyDown: nowDown)
                 }
             }
@@ -391,7 +391,7 @@ final class ControllerManager {
                 xPositive = nowRight
                 if let code: CGKeyCode = rightCode {
                     let action: String = nowRight ? "↓" : "↑"
-                    print("\(action) \(rightName) → \(rightKeyName!)")
+                    print("\(action) \(rightName) → \(rightKeyName ?? "(unmapped)")")
                     EventSynthesizer.postKey(code: code, keyDown: nowRight)
                 }
             }
@@ -399,7 +399,7 @@ final class ControllerManager {
                 xNegative = nowLeft
                 if let code: CGKeyCode = leftCode {
                     let action: String = nowLeft ? "↓" : "↑"
-                    print("\(action) \(leftName) → \(leftKeyName!)")
+                    print("\(action) \(leftName) → \(leftKeyName ?? "(unmapped)")")
                     EventSynthesizer.postKey(code: code, keyDown: nowLeft)
                 }
             }

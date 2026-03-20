@@ -20,8 +20,17 @@ struct GamepadConfig {
 
 /// Parses a YAML config file into a GamepadConfig.
 enum ConfigParser {
+    private static let maxConfigFileSize: Int = 1_000_000  // 1 MB
+
     static func parse(filePath: String) throws -> GamepadConfig {
         let url: URL = URL(fileURLWithPath: filePath)
+
+        // Guard against large files (YAML bomb / DoS)
+        let attributes: [FileAttributeKey: Any] = try FileManager.default.attributesOfItem(atPath: url.path)
+        if let fileSize: Int = (attributes[.size] as? NSNumber)?.intValue, fileSize > maxConfigFileSize {
+            throw ConfigError.fileTooLarge(fileSize)
+        }
+
         let yamlString: String = try String(contentsOf: url, encoding: .utf8)
         guard let yaml: [String: Any] = try Yams.load(yaml: yamlString) as? [String: Any] else {
             throw ConfigError.invalidFormat
@@ -33,7 +42,11 @@ enum ConfigParser {
         for (key, value): (String, Any) in yaml {
             if key == "deadzone" {
                 if let dz: Double = value as? Double {
-                    deadzone = Float(dz)
+                    if dz >= 0.0 && dz <= 1.0 {
+                        deadzone = Float(dz)
+                    } else {
+                        print("Warning: Deadzone value \(dz) out of range [0.0, 1.0], using default 0.5.")
+                    }
                 }
                 continue
             }
@@ -56,6 +69,10 @@ enum ConfigParser {
             buttonMap[key] = code
         }
 
+        if buttonMap.isEmpty {
+            throw ConfigError.noMappingsFound
+        }
+
         print("Loaded \(buttonMap.count) button mappings, deadzone: \(deadzone)")
         return GamepadConfig(buttonMap: buttonMap, deadzone: deadzone)
     }
@@ -63,11 +80,17 @@ enum ConfigParser {
 
 enum ConfigError: Error, CustomStringConvertible {
     case invalidFormat
+    case fileTooLarge(Int)
+    case noMappingsFound
 
     var description: String {
         switch self {
         case .invalidFormat:
             return "Config file is not a valid YAML dictionary."
+        case .fileTooLarge(let size):
+            return "Config file too large (\(size) bytes). Maximum allowed: 1 MB."
+        case .noMappingsFound:
+            return "Config file contains no button mappings."
         }
     }
 }

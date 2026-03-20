@@ -1,3 +1,4 @@
+import ApplicationServices
 import CoreGraphics
 import Foundation
 
@@ -6,6 +7,15 @@ enum EventSynthesizer {
     /// Set of currently pressed key codes, used for cleanup on shutdown.
     private(set) static var pressedKeys: Set<CGKeyCode> = []
     private static let lock = NSLock()
+
+    /// Checks whether the process has Accessibility permissions.
+    /// Prompts the user via system dialog if not yet granted.
+    /// Returns `true` if trusted; `false` otherwise.
+    @discardableResult
+    static func checkAccessibility(prompt: Bool = true) -> Bool {
+        let options: CFDictionary = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: prompt] as CFDictionary
+        return AXIsProcessTrustedWithOptions(options)
+    }
 
     /// Posts a key-down or key-up event for the given key code.
     static func postKey(code: CGKeyCode, keyDown: Bool) {
